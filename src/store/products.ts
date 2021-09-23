@@ -25,12 +25,12 @@ const ProductsStore = Model.named('ProductsStore')
     })
   })
   .actions((self) => ({
-    getProducts(payload, { page, sort }) {
+    getProducts(payload: any, { page, sort }: { page: number, sort: string | null }) {
       return self.request({
         type: TYPES.GET_PRODUCTS,
         api: getProducts,
         payload,
-        onSuccess: (result) => {
+        onSuccess: (result: any) => {
           self.products = {
             items: result.products,
             page,
@@ -47,7 +47,7 @@ export {
 }
 export default ProductsStore.create({
   products: {
-    item: [],
+    items: [],
     page: 1,
     total: 0
   }

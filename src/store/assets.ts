@@ -9,7 +9,7 @@ const TYPES = {
 
 const AssetsStore = Model.named('AssetsStore')
   .actions((self) => ({
-    uploadFiles(payload) {
+    uploadFiles(payload: File[]) {
       return self.request({
         type: TYPES.UPLOAD_FILES,
         api: uploadFiles,

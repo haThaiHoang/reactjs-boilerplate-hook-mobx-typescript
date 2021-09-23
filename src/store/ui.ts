@@ -5,7 +5,7 @@ const UiStore = types.model('UiStore')
     sideBarStatus: types.boolean
   })
   .actions((self) => ({
-    setSideBarStatus(status) {
+    setSideBarStatus(status: boolean) {
       self.sideBarStatus = status
     },
 

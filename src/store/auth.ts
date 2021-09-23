@@ -15,7 +15,7 @@ const AuthStore = Model.named('AuthStore')
     setLogin() {
       self.loggedIn = !self.loggedIn
     },
-    login(payload) {
+    login(payload: any) {
       return self.request({
         type: TYPES.LOGIN,
         api: login,
