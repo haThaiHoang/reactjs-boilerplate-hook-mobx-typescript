@@ -88,11 +88,6 @@ module.exports = (env) => {
       }, {
         test: /\.(jpg|jpeg|png|svg|woff|eot|ttf|otf|pdf|gif)$/,
         use: ['file-loader']
-      }, {
-        test: /\.m?js/,
-        resolve: {
-          fullySpecified: false
-        }
       }]
     },
     plugins: [
@@ -121,7 +116,6 @@ module.exports = (env) => {
       new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-      port: 3000,
       hot: true,
       open: true,
       client: {
