@@ -83,7 +83,7 @@ module.exports = (env) => {
           }
         }]
       }, {
-        test: /\.(jpg|jpeg|png|svg|woff|eot|ttf|otf|pdf)$/,
+        test: /\.(jpg|jpeg|png|svg|woff|eot|ttf|otf|pdf|gif)$/,
         use: ['file-loader']
       }, {
         test: /\.m?js/,
