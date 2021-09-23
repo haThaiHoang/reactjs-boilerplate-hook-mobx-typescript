@@ -8,7 +8,7 @@ import Routes from '@/app/routes'
 import Confirmable from '@/components/confirmable'
 import '@/translations/i18n'
 
-const App = () => (
+const App = (): JSX.Element => (
   <Store>
     <Theme>
       <Init>

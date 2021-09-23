@@ -1,7 +1,7 @@
 // import { MainApi } from './endpoint'
 import mockData from '@/utils/mock-api'
 
-export function login(payload) {
+export function login(payload: any): Promise<any> {
   // return MainApi.post('/login', payload)
 
   if (payload.username === 'admin' && payload.password === '123123123') {

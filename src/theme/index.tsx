@@ -15,7 +15,7 @@ class Theme extends Component {
   //   })
   // }
 
-  render() {
+  render(): JSX.Element {
     const { children } = this.props
     const theme = {
       ...this.state

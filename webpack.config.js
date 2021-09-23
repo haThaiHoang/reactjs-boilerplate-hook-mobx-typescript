@@ -31,7 +31,7 @@ module.exports = (env) => {
   return {
     devtool: IS_DEV ? 'eval-cheap-module-source-map' : false,
     target: IS_DEV ? 'web' : 'browserslist',
-    entry: path.resolve(__dirname, IS_DEV ? 'src/index.dev.js' : 'src'),
+    entry: path.resolve(__dirname, IS_DEV ? 'src/index.dev.ts' : 'src/index.ts'),
     output: {
       filename: '[name][fullhash].js',
       chunkFilename: '[name][fullhash].js',

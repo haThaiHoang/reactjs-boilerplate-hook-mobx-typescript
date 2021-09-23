@@ -1,47 +1,64 @@
 import lodash from 'lodash'
 
-let accessToken = null
+let accessToken: string | null = null
+
+interface IOption {
+  endpoint: string
+  handleToken?: boolean
+  handleBlob?: boolean
+}
+interface IRequestOptions {
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  url: string
+  params?: any
+  data?: any
+  headers?: any
+}
 
 class Request {
-  static create(options) {
-    return new Request(options)
-  }
-
-  static setAccessToken(token) {
-    accessToken = token
-  }
-
-  static getAccessToken() {
-    return accessToken
-  }
-
-  static removeAccessToken() {
-    accessToken = null
-  }
-
-  constructor(options) {
+  constructor(options: IOption) {
     this._options = options
   }
 
-  get(url, params, headers) {
+  _options: IOption
+  _authorization: string | null | undefined
+
+  static create(options: IOption): any {
+    return new Request(options)
+  }
+
+  static setAccessToken(token: string): void {
+    accessToken = token
+  }
+
+  static getAccessToken(): string | null {
+    return accessToken
+  }
+
+  static removeAccessToken(): void {
+    accessToken = null
+  }
+
+  get(url: string, params: any, headers: any): Promise<any> {
     return this._request({ method: 'GET', url, params, headers })
   }
 
-  post(url, data, params, headers) {
+  post(url: string, data: any, params: any, headers: any): Promise<any> {
     return this._request({ method: 'POST', url, params, data, headers })
   }
 
-  put(url, data, params, headers) {
+  put(url: string, data: any, params: any, headers: any): Promise<any> {
     return this._request({ method: 'PUT', url, params, data, headers })
   }
 
-  delete(url, data, params, headers) {
+  delete(url: string, data: any, params: any, headers: any): Promise<any> {
     return this._request({ method: 'DELETE', url, params, data, headers })
   }
 
-  async _request(requestOptions) {
+  async _request(requestOptions: IRequestOptions): Promise<any> {
     const { method = 'GET', data = null, headers } = requestOptions
-    let { url, params = null } = requestOptions
+    let { url } = requestOptions
+    const { params = null } = requestOptions
 
     url = this._options.endpoint + url
 
@@ -55,7 +72,11 @@ class Request {
       url += this._getQueryString(params)
     }
 
-    const options = {
+    const options: {
+      method: string
+      headers: any,
+      body?: any
+    } = {
       method,
       headers: {}
     }
@@ -108,8 +129,8 @@ class Request {
     }
   }
 
-  _getQueryString(params) {
-    const parts = []
+  _getQueryString(params: any): string {
+    const parts: string[] = []
 
     lodash.forEach(params, (value, key) => {
       const values = lodash.isArray(value) ? value : [value]

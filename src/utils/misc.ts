@@ -2,11 +2,16 @@ import lodash from 'lodash'
 
 import Configs from '@/configs'
 
-function isFetchError(error) {
+let isMobile = false
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  isMobile = true
+}
+
+function isFetchError(error: any) {
   return !!error && lodash.hasIn(error, 'status') && lodash.isFunction(error.json)
 }
 
-async function getFetchError(error) {
+async function getFetchError(error: any) {
   try {
     return await error.json()
   } catch (e) {
@@ -15,7 +20,7 @@ async function getFetchError(error) {
 }
 
 export default class Misc {
-  static trimObjectProperties = (obj, properties) => {
+  static trimObjectProperties = (obj: any, properties: string[]): any => {
     const data = lodash.cloneDeep(obj)
 
     if (lodash.isArray(properties)) {
@@ -31,13 +36,19 @@ export default class Misc {
     return data
   }
 
-  static getImageURL = (name) => name && `${Configs.API_URL}/${name}`
+  static getImageURL = (name: string): string => name && `${Configs.API_URL}/${name}`
 
-  static getErrorJsonBody = async (error) => {
+  static getErrorJsonBody = async (error: any): Promise<any> => {
     if (isFetchError(error)) {
       error = await getFetchError(error)
     }
 
     return error
   }
+
+  static insert = (array: any[], index: number, value: any): any[] => (
+    array.slice(0, index).concat(value).concat(array.slice(index, array.length))
+  )
+
+  static isMobile = isMobile
 }

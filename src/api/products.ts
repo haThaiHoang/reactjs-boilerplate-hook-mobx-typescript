@@ -1,7 +1,7 @@
 // import { MainApi } from './endpoint'
 import mockData from '@/utils/mock-api'
 /* eslint-disable max-len */
-export function getProducts() {
+export function getProducts(): Promise<any> {
   // return MainApi.get('/schedules', payload)
 
   return mockData({

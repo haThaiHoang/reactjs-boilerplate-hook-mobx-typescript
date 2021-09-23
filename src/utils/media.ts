@@ -10,11 +10,11 @@ const SIZE = {
 export default class Media {
   static SIZE = SIZE
 
-  static greaterThan(windowSize) {
+  static greaterThan(windowSize: number): string {
     return `@media only screen and (min-width: ${windowSize}px)`
   }
 
-  static lessThan(windowSize) {
+  static lessThan(windowSize: number): string {
     return `@media only screen and (max-width: ${windowSize - 1}px)`
   }
 }

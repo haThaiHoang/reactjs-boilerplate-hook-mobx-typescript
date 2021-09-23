@@ -1,9 +1,11 @@
 class Storage {
-  constructor(storage) {
+  _storage: globalThis.Storage
+
+  constructor(storage: globalThis.Storage) {
     this._storage = storage
   }
 
-  get(key, defaultValue = null) {
+  get(key: string, defaultValue: string | null = null) {
     let value = this._storage.getItem(key) || defaultValue
 
     if (value) {
@@ -17,17 +19,17 @@ class Storage {
     return value
   }
 
-  has(key) {
+  has(key: string) {
     return this.get(key) !== null
   }
 
-  set(key, value) {
+  set(key: string, value: string | null | undefined) {
     value = JSON.stringify(value)
 
     this._storage.setItem(key, value)
   }
 
-  remove(key) {
+  remove(key: string) {
     this._storage.removeItem(key)
   }
 
@@ -35,7 +37,7 @@ class Storage {
     this._storage.clear()
   }
 
-  pull(key, defaultValue) {
+  pull(key: string, defaultValue?: string) {
     const value = this.get(key, defaultValue)
 
     this.remove(key)
