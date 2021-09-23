@@ -1,15 +1,13 @@
-import { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import { Popover } from 'antd'
 import styled from 'styled-components'
-import { inject } from 'mobx-react'
-import { withTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import classnames from 'classnames'
 
 import Storage from '@/utils/storage'
 import Clickable from '@/components/clickable'
 import { Colors } from '@/theme'
-import { history } from '@/store'
+import { useStore, history } from '@/store'
 
 const HeaderContainer = styled.header`
   width: 100%;
@@ -109,83 +107,62 @@ const HeaderContainer = styled.header`
   }
 `
 
-@withTranslation('common')
-@inject((stores) => ({
-  uiStore: stores.ui
-}))
-class Header extends Component {
-  static propTypes = {
-    uiStore: PropTypes.object
-  }
+const Header = () => {
+  const store = useStore()
+  const { t, i18n } = useTranslation('common')
 
-  _onLogout = (e) => {
+  const onLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
 
     Storage.remove('ACCESS_TOKEN')
     history.replace('/login')
   }
 
-  _onChangeLanguage = (language) => {
-    const { i18n } = this.props
-
-    i18n.changeLanguage(language)
-  }
-
-  _onToggleSideMenu = () => {
-    const { uiStore } = this.props
-
-    uiStore.toggleSideBar()
-  }
-
-  render() {
-    const { t, i18n } = this.props
-
-    return (
-      <HeaderContainer>
-        <div className="content">
-          <div className="left-box">
-            <Clickable
-              className="menu-button"
-              onClick={this._onToggleSideMenu}
-            >
-              <div />
-              <div />
-              <div />
-            </Clickable>
-            <p className="title">{t('header.title')}</p>
-          </div>
-          <div className="right-box">
-            <Popover
-              content={(
-                <a href="/" onClick={this._onLogout}>Logout</a>
-              )}
-              trigger="click"
-            >
-              <div className="user-box">
-                <img
-                  className="avatar"
-                  src="https://picsum.photos/300"
-                  alt=""
-                />
-                <p className="name">hoanght</p>
-              </div>
-            </Popover>
-            <div className="language-box">
-              {['en', 'vi'].map((item) => (
-                <Clickable
-                  key={item}
-                  className={classnames('language-button', { active: item === i18n.language })}
-                  onClick={() => this._onChangeLanguage(item)}
-                >
-                  {item.toUpperCase()}
-                </Clickable>
-              ))}
+  return (
+    <HeaderContainer>
+      <div className="content">
+        <div className="left-box">
+          <Clickable
+            className="menu-button"
+            onClick={store.ui.toggleSideBar}
+          >
+            <div />
+            <div />
+            <div />
+          </Clickable>
+          <p className="title">{t('header.title')}</p>
+        </div>
+        <div className="right-box">
+          <Popover
+            content={(
+              <a href="/" onClick={onLogout}>Logout</a>
+            )}
+            trigger="click"
+          >
+            <div className="user-box">
+              <img
+                className="avatar"
+                src="https://picsum.photos/300"
+                alt=""
+              />
+              <p className="name">hoanght</p>
             </div>
+          </Popover>
+          <div className="language-box">
+            {['en', 'vi'].map((item) => (
+              <Clickable
+                key={item}
+                className={classnames('language-button', { active: item === i18n.language })}
+                onClick={() => i18n.changeLanguage(item)}
+              >
+                {item.toUpperCase()}
+              </Clickable>
+            ))}
           </div>
         </div>
-      </HeaderContainer>
-    )
-  }
+      </div>
+    </HeaderContainer>
+  )
 }
 
 export default Header

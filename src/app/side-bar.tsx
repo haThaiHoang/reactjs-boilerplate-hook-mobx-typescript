@@ -1,12 +1,12 @@
-import { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
-import { withTranslation } from 'react-i18next'
-import { inject, observer } from 'mobx-react'
+import { useTranslation } from 'react-i18next'
 import classnames from 'classnames'
+import { observer } from 'mobx-react'
 
 import { Colors } from '@/theme'
+import { useStore } from '@/store'
 
 const Box = styled.div`
   width: 0;
@@ -62,40 +62,29 @@ const MENU_ITEMS = [{
   name: 'examples'
 }]
 
-@withTranslation('common')
-@inject((stores) => ({
-  uiStore: stores.ui
-}))
-@observer
-class SideBar extends Component {
-  static propTypes = {
-    uiStore: PropTypes.object
-  }
 
-  state = {}
+const SideBar = observer((): JSX.Element => {
+  const { t } = useTranslation('common')
+  const store = useStore()
 
-  render() {
-    const { t, uiStore } = this.props
-
-    return (
-      <Box className={classnames({ open: uiStore.sideBarStatus })}>
-        <div className="surfing-box">
-          <div className="menu">
-            {MENU_ITEMS.map((item, index) => (
-              <NavLink
-                exact
-                key={index}
-                to={item.link}
-                className="menu-item"
-              >
-                {t(`side_bar.${item.name}`)}
-              </NavLink>
-            ))}
-          </div>
+  return (
+    <Box className={classnames({ open: store.ui.sideBarStatus })}>
+      <div className="surfing-box">
+        <div className="menu">
+          {MENU_ITEMS.map((item, index) => (
+            <NavLink
+              exact
+              key={index}
+              to={item.link}
+              className="menu-item"
+            >
+              {t(`side_bar.${item.name}`)}
+            </NavLink>
+          ))}
         </div>
-      </Box>
-    )
-  }
-}
+      </div>
+    </Box>
+  )
+})
 
 export default SideBar
