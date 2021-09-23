@@ -13,6 +13,8 @@ import Button from '@/components/button'
 import Page from '@/components/page'
 import Field from '@/components/field'
 import VALIDATION_MESSAGES from '@/constants/validation-messages'
+import { useStore } from '@/store'
+import authStore from '@/store/auth'
 
 const StyledContainer = styled(Container)`
   display: flex;
@@ -77,25 +79,26 @@ class Login extends Component {
   }
 
   _onSubmit = async (values) => {
-    const { authStore, history } = this.props
-
-    this.setState({ loading: true })
-
-    const { success, data } = await authStore.login(values)
-
-    if (success) {
-      Storage.set('ACCESS_TOKEN', data.token)
-      Request.setAccessToken(data.token)
-
-      this.setState({ loading: false })
-      history.push('/')
-    } else {
-      this.setState({ loading: false })
-    }
+    // const { authStore, history } = this.props
+    //
+    // this.setState({ loading: true })
+    //
+    // const { success, data } = await authStore.login(values)
+    //
+    // if (success) {
+    //   Storage.set('ACCESS_TOKEN', data.token)
+    //   Request.setAccessToken(data.token)
+    //
+    //   this.setState({ loading: false })
+    //   history.push('/')
+    // } else {
+    //   this.setState({ loading: false })
+    // }
   }
 
   _renderForm = ({ handleSubmit }) => {
     const { loading } = this.state
+    const { authStore } = this.props
 
     return (
       <Form className="form">
@@ -119,7 +122,9 @@ class Login extends Component {
             htmlType="submit"
             type="primary"
             loading={loading}
-            onClick={handleSubmit}
+            onClick={() => {
+              authStore.setLogin()
+            }}
           >
             Login
           </Button>
@@ -129,6 +134,8 @@ class Login extends Component {
   }
 
   render() {
+    const { authStore } = this.props
+
     const initialValues = {
       username: '',
       password: ''
@@ -151,4 +158,30 @@ class Login extends Component {
   }
 }
 
-export default Login
+const tempfunc = () => {
+  console.log(7777, authStore.loggedIn)
+
+  return (
+    <p>asd</p>
+  )
+}
+
+tempfunc()
+
+export default observer(() => {
+  // const store = useStore()
+  return (
+    <Button
+      size="large"
+      htmlType="submit"
+      type="primary"
+      // loading={loading}
+      onClick={() => {
+        // authStore.setLogin()
+        authStore.setLogin()
+      }}
+    >
+      Login
+    </Button>
+  )
+})

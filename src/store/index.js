@@ -1,4 +1,4 @@
-import { Provider } from 'mobx-react'
+import { createContext, useContext } from 'react'
 import { createBrowserHistory } from 'history'
 import { Router } from 'react-router-dom'
 
@@ -17,10 +17,23 @@ const stores = {
   products
 }
 
+const RootStoreContext = createContext(null)
+const StoreProvider = RootStoreContext.Provider
+
+export function useStore() {
+  const store = useContext(RootStoreContext)
+
+  if (store === null) {
+    throw new Error('Store cannot be null, please add a context provider')
+  }
+
+  return store
+}
+
 export default ({ children }) => (
-  <Provider {...stores}>
+  <StoreProvider value={stores}>
     <Router history={history}>
       {children}
     </Router>
-  </Provider>
+  </StoreProvider>
 )

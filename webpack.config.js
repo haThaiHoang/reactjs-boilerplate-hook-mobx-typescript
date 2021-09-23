@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 const lodash = require('lodash')
 const path = require('path')
+const CopyPlugin = require('copy-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 function getAppConfig(env) {
   let data = require(`./src/configs/${env}`)
@@ -42,13 +44,14 @@ module.exports = (env) => {
       }
     },
     resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
       alias: {
         "@": path.resolve(__dirname, "src")
       }
     },
     module: {
       rules: [{
-        test: /\.js$/,
+        test: /\.(ts|tsx|jsx|js)$/,
         exclude: /(node_modules|bower_components)/,
         use: ['babel-loader']
       }, {
@@ -106,15 +109,24 @@ module.exports = (env) => {
       new webpack.DefinePlugin({
         'window._CONFIG': JSON.stringify(appConfigs),
       }),
+      new CopyPlugin({
+        patterns: [{
+          from: path.join(__dirname, 'public'),
+          to: path.join(__dirname, 'build')
+        }]
+      }),
+      new ForkTsCheckerWebpackPlugin({
+        async: false
+      }),
       new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
+      port: 3000,
       hot: true,
       open: true,
       client: {
         overlay: true,
-        logging: 'verbose',
-        progress: true
+        logging: 'warn'
       },
       historyApiFallback: true
     },
