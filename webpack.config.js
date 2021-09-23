@@ -109,15 +109,13 @@ module.exports = (env) => {
       new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-      host: '0.0.0.0',
-      useLocalIp: true,
-      disableHostCheck: true,
       hot: true,
       open: true,
-      overlay: true,
-      stats: 'minimal',
-      clientLogLevel: 'warning',
-      contentBase: path.join(__dirname, 'src'),
+      client: {
+        overlay: true,
+        logging: 'verbose',
+        progress: true
+      },
       historyApiFallback: true
     },
     stats: 'minimal',
