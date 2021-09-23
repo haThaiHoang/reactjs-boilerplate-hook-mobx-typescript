@@ -4,7 +4,7 @@ import {
 } from '@/api/assets'
 
 const TYPES = {
-  UPLOAD_FILES: 1
+  UPLOAD_FILES: 'UPLOAD_FILES'
 }
 
 const AssetsStore = Model.named('AssetsStore')

@@ -1,9 +1,8 @@
-import { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Formik, Form } from 'formik'
+import { useState } from 'react'
+import { Formik, Form, FormikProps, FormikValues } from 'formik'
 import * as yup from 'yup'
 import styled from 'styled-components'
-import { inject, observer } from 'mobx-react'
+import { useHistory } from 'react-router-dom'
 
 import Request from '@/utils/request'
 import Storage from '@/utils/storage'
@@ -14,7 +13,6 @@ import Page from '@/components/page'
 import Field from '@/components/field'
 import VALIDATION_MESSAGES from '@/constants/validation-messages'
 import { useStore } from '@/store'
-import authStore from '@/store/auth'
 
 const StyledContainer = styled(Container)`
   display: flex;
@@ -65,41 +63,33 @@ const validationSchema = yup.object().shape({
   password: yup.string().required(VALIDATION_MESSAGES.PASSWORD_REQUIRED)
 })
 
-@inject((stores) => ({
-  authStore: stores.auth
-}))
-@observer
-class Login extends Component {
-  static propTypes = {
-    authStore: PropTypes.object
+const initialValues = {
+  username: '',
+  password: ''
+}
+
+const Login = () => {
+  const store: any = useStore()
+  const history = useHistory()
+  const [loading, setLoading] = useState(false)
+
+  const onSubmit = async (values: FormikValues): Promise<void> => {
+    setLoading(true)
+
+    const { success, data } = await store.auth.login(values)
+
+    if (success) {
+      Storage.set('ACCESS_TOKEN', data.token)
+      Request.setAccessToken(data.token)
+
+      setLoading(false)
+      history.push('/')
+    } else {
+      setLoading(false)
+    }
   }
 
-  state = {
-    loading: false
-  }
-
-  _onSubmit = async (values) => {
-    // const { authStore, history } = this.props
-    //
-    // this.setState({ loading: true })
-    //
-    // const { success, data } = await authStore.login(values)
-    //
-    // if (success) {
-    //   Storage.set('ACCESS_TOKEN', data.token)
-    //   Request.setAccessToken(data.token)
-    //
-    //   this.setState({ loading: false })
-    //   history.push('/')
-    // } else {
-    //   this.setState({ loading: false })
-    // }
-  }
-
-  _renderForm = ({ handleSubmit }) => {
-    const { loading } = this.state
-    const { authStore } = this.props
-
+  const renderForm = ({ handleSubmit }: FormikProps<FormikValues>): JSX.Element => {
     return (
       <Form className="form">
         <p className="title">LOGIN</p>
@@ -119,12 +109,9 @@ class Login extends Component {
         <div className="action-box">
           <Button
             size="large"
-            htmlType="submit"
-            type="primary"
+            type="submit"
             loading={loading}
-            onClick={() => {
-              authStore.setLogin()
-            }}
+            onClick={handleSubmit}
           >
             Login
           </Button>
@@ -133,55 +120,20 @@ class Login extends Component {
     )
   }
 
-  render() {
-    const { authStore } = this.props
-
-    const initialValues = {
-      username: '',
-      password: ''
-    }
-
-    return (
-      <Page>
-        <StyledContainer>
-          <Formik
-            validateOnChange={false}
-            validateOnBlur={false}
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={this._onSubmit}
-            component={this._renderForm}
-          />
-        </StyledContainer>
-      </Page>
-    )
-  }
-}
-
-const tempfunc = () => {
-  console.log(7777, authStore.loggedIn)
-
   return (
-    <p>asd</p>
+    <Page>
+      <StyledContainer>
+        <Formik
+          validateOnChange={false}
+          validateOnBlur={false}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+          component={renderForm}
+        />
+      </StyledContainer>
+    </Page>
   )
 }
 
-tempfunc()
-
-export default observer(() => {
-  // const store = useStore()
-  return (
-    <Button
-      size="large"
-      htmlType="submit"
-      type="primary"
-      // loading={loading}
-      onClick={() => {
-        // authStore.setLogin()
-        authStore.setLogin()
-      }}
-    >
-      Login
-    </Button>
-  )
-})
+export default Login

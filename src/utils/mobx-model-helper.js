@@ -9,7 +9,7 @@ import { history } from '@/store'
 import Storage from './storage'
 
 const Model = types.model('MobxModelHelper', {
-  type: types.maybeNull(types.number),
+  type: types.maybeNull(types.string),
   error: types.frozen()
 })
   .actions((self) => ({

@@ -27,10 +27,17 @@ const Div = styled.div`
   }
 `
 
-export default function ({ children, className }) {
+interface IProps {
+  className?: string
+  children: React.ReactNode
+}
+
+const Container = ({ children, className }: IProps): JSX.Element => {
   className = classNames(className, 'container')
 
   return (
     <Div className={className}>{ children }</Div>
   )
 }
+
+export default Container

@@ -9,8 +9,7 @@ const TYPES = {
 
 const AuthStore = Model.named('AuthStore')
   .props({
-    loggedIn: types.boolean,
-    loggedIn2: types.boolean
+    loggedIn: types.boolean
   })
   .actions((self) => ({
     setLogin() {
@@ -28,8 +27,7 @@ const AuthStore = Model.named('AuthStore')
     }
   }))
   .create({
-    loggedIn: false,
-    loggedIn2: false
+    loggedIn: false
   })
 
 export { TYPES }

@@ -4,7 +4,7 @@ import { Model } from '@/utils/mobx-model-helper'
 import { getProducts } from '@/api/products'
 
 const TYPES = {
-  'GET_PRODUCTS': 1
+  'GET_PRODUCTS': 'GET_PRODUCTS'
 }
 
 const Product = types.model('Product')

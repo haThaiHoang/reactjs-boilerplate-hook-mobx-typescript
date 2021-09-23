@@ -1,10 +1,15 @@
-import PropTypes from 'prop-types'
+import React from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 
 import { Colors } from '@/theme'
 
-const StyledP = styled.p`
+interface IStyledProps {
+  align?: string
+  bold?: boolean
+}
+
+const StyledP = styled.p<IStyledProps>`
   text-align: ${(props) => props.align || 'left'};
   font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};
   font-size: 14px;
@@ -59,6 +64,18 @@ const StyledP = styled.p`
   }
 `
 
+interface IProps {
+  className?: string
+  size?: string
+  link?: boolean
+  primary?: boolean
+  secondary?: boolean
+  underline?: boolean
+  center?: boolean
+  bold?: boolean,
+  children: React.ReactNode
+}
+
 const Typography = ({
   className,
   children,
@@ -69,7 +86,7 @@ const Typography = ({
   center,
   size,
   ...props
-}) => (
+}: IProps): JSX.Element => (
   <StyledP
     className={classnames(size || '', {
       link,
@@ -83,13 +100,5 @@ const Typography = ({
     {children}
   </StyledP>
 )
-Typography.propTypes = {
-  size: PropTypes.string,
-  link: PropTypes.bool,
-  primary: PropTypes.bool,
-  secondary: PropTypes.bool,
-  underline: PropTypes.bool,
-  center: PropTypes.bool
-}
 
 export default Typography

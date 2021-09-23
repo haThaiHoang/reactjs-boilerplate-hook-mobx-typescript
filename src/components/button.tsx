@@ -1,13 +1,12 @@
-import PropTypes from 'prop-types'
+import React from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 
 import { Colors } from '@/theme'
 import Typography from '@/components/typography'
 import Media from '@/utils/media'
-import Misc from '@/utils/misc'
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ background: string, textcolor?: string }>`
   overflow: hidden;
   position: relative;
   background-color: ${(props) => props.background};
@@ -94,6 +93,21 @@ const StyledButton = styled.button`
   }
 `
 
+interface IProps {
+  size?: 'small' | 'large'
+  loading?: boolean
+  rounded?: boolean
+  disabled?: boolean
+  square?: boolean
+  background: string
+  textColor?: string
+  onClick: () => void
+  icon?: string
+  className?: string,
+  children: React.ReactNode
+  type?: 'button' | 'submit' | 'reset'
+}
+
 const Button = ({
   children,
   size,
@@ -107,7 +121,7 @@ const Button = ({
   disabled,
   square,
   ...props
-}) => (
+}: IProps): JSX.Element => (
   <StyledButton
     {...props}
     disabled={disabled}
@@ -118,25 +132,14 @@ const Button = ({
       rounded,
       square
     }, 'button', className)}
-    onClick={(loading || disabled) ? null : onClick}
+    onClick={(loading || disabled) ? () => null : onClick}
   >
     {icon && <img src={icon} alt="" />}
-    <Typography changaFont>
+    <Typography>
       {children}
     </Typography>
   </StyledButton>
 )
-Button.propTypes = {
-  size: PropTypes.oneOf(['small']),
-  loading: PropTypes.bool,
-  rounded: PropTypes.bool,
-  disabled: PropTypes.bool,
-  square: PropTypes.bool,
-  background: PropTypes.string,
-  textColor: PropTypes.string,
-  onClick: PropTypes.func,
-  icon: PropTypes.string
-}
 Button.defaultProps = {
   background: Colors.PRIMARY
 }
