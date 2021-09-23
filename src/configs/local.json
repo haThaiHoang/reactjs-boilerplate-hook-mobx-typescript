@@ -1,0 +1,6 @@
+{
+  "TITLE": "React JS App",
+  "API_URL": "https://example.com",
+  "PUBLIC_PATH": "/",
+  "BASE_NAME": "/"
+}

@@ -1,0 +1,42 @@
+@import '~antd/dist/antd.less';
+
+@primary-color: #388E3C;
+
+.ant-message {
+  .ant-message-notice {
+    .ant-message-notice-content {
+      background-color: #94a716;;
+      border-radius: 4px;
+
+      .ant-message-custom-content {
+        span {
+          color: white;
+        }
+      }
+    }
+
+    &.ant-custom-error {
+      .ant-message-notice-content {
+        background-color: #ff4d4f;
+
+        .ant-message-custom-content {
+          span {
+            color: white;
+          }
+        }
+      }
+    }
+
+    &.ant-custom-warning {
+      .ant-message-notice-content {
+        background-color: #faad14;
+
+        .ant-message-custom-content {
+          span {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}

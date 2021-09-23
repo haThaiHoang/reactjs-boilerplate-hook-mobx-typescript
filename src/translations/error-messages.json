@@ -1,0 +1,15 @@
+{
+  "en": {
+    "error-messages": {
+      "TOKEN_INVALID": "Token invalid",
+      "USERNAME_OR_PASSWORD_INCORRECT": "Username or password incorrect"
+    }
+  },
+
+  "vi": {
+    "error-messages": {
+      "TOKEN_INVALID": "Token không hợp lệ",
+      "USERNAME_OR_PASSWORD_INCORRECT": "Tài khoản hoặc mật khẩu không đúng"
+    }
+  }
+}

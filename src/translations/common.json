@@ -1,0 +1,25 @@
+{
+  "en": {
+    "common": {
+      "header": {
+        "title": "React JS Boilerplate"
+      },
+      "side_bar": {
+        "home": "Home",
+        "examples": "Examples"
+      }
+    }
+  },
+
+  "vi": {
+    "common": {
+      "header": {
+        "title": "Bản mẫu React JS"
+      },
+      "side_bar": {
+        "home": "Trang chủ",
+        "examples": "Các ví dụ"
+      }
+    }
+  }
+}
