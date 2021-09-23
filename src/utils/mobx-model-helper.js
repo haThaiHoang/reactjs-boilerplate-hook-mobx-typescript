@@ -4,7 +4,7 @@ import i18n from '@/translations/i18n'
 import Toast from '@/components/toast'
 import Misc from '@/utils/misc'
 import Request from '@/utils/request'
-import ERROR_MESSAGES from '@/translations/error-messages'
+import ERROR_MESSAGES from '@/translations/error-messages.json'
 import { history } from '@/store'
 import Storage from './storage'
 
