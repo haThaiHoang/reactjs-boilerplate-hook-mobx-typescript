@@ -69,7 +69,7 @@ const initialValues = {
 }
 
 const Login = () => {
-  const store: any = useStore()
+  const store = useStore()
   const history = useHistory()
   const [loading, setLoading] = useState(false)
 
