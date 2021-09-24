@@ -1,6 +1,6 @@
 import Typography from '@/components/typography'
 
-export default () => (
+const TypographySection = (): JSX.Element => (
   <section>
     <p className="section-title">
       Typography
@@ -21,3 +21,5 @@ export default () => (
     </div>
   </section>
 )
+
+export default TypographySection

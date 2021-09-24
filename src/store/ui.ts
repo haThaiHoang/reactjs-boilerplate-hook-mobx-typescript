@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree'
+import { types, Instance } from 'mobx-state-tree'
 
 const UiStore = types.model('UiStore')
   .props({
@@ -17,4 +17,7 @@ const UiStore = types.model('UiStore')
     sideBarStatus: true
   })
 
-export default UiStore
+interface IUiStore extends Instance<typeof UiStore> {}
+
+export type { IUiStore }
+export default UiStore as IUiStore

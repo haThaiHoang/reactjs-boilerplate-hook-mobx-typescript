@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
 import { Colors } from '@/theme'
@@ -34,13 +33,15 @@ const StyledDiv = styled.div`
   }
 `
 
-const Loading = ({ size, className }) => (
+interface IProps {
+  size?: 'small'
+  className?: string
+}
+
+const Loading = ({ size, className }: IProps) => (
   <StyledDiv
     className={classnames(size, className)}
   />
 )
-Loading.propTypes = {
-  size: PropTypes.oneOf(['small'])
-}
 
 export default Loading

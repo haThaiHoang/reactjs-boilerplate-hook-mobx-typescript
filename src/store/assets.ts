@@ -1,3 +1,5 @@
+import { Instance } from 'mobx-state-tree'
+
 import { Model } from '@/utils/mobx-model-helper'
 import {
   uploadFiles
@@ -19,5 +21,8 @@ const AssetsStore = Model.named('AssetsStore')
   }))
   .create()
 
+interface IAssetsStore extends Instance<typeof AssetsStore> {}
+
 export { TYPES }
-export default AssetsStore
+export type { IAssetsStore }
+export default AssetsStore as IAssetsStore

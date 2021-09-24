@@ -1,14 +1,17 @@
 import lodash from 'lodash'
-import { message, notification } from 'antd'
+import { message } from 'antd'
 
-const show = (type, data) => {
+type TData = string | {
+  content: string,
+  duration?: number
+}
+
+const show = (type: 'success' | 'warning' | 'error', data: TData) => {
   const className = type === 'error'
     ? 'ant-custom-error' : type === 'warning'
       ? 'ant-custom-warning' : ''
 
-  if (lodash.isObject(data) && data.size === 'large') {
-    notification[type](data)
-  } else if (lodash.isString(data)) {
+  if (lodash.isString(data)) {
     message[type]({
       content: data,
       className
@@ -22,15 +25,15 @@ const show = (type, data) => {
 }
 
 class Toast {
-  static show(data) {
+  static show(data: TData): void {
     show('success', data)
   }
 
-  static warning(data) {
+  static warning(data: TData): void {
     show('warning', data)
   }
 
-  static error(data) {
+  static error(data: TData): void {
     show('error', data)
   }
 }

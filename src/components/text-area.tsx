@@ -1,9 +1,9 @@
 import { Component } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import { Input } from 'antd'
 import lodash from 'lodash'
+import { FieldInputProps, FormikProps } from 'formik'
 
 const { TextArea: AntTextArea } = Input
 
@@ -21,11 +21,11 @@ const StyledTextArea = styled(AntTextArea)`
   //::-ms-input-placeholder {
   //  color: #b0b4b5;
   //}
-  
+
   &.error {
     border: solid 1px red;
   }
-  
+
   // Disable auto fill backgorund
   //&:-webkit-autofill,
   //&:-webkit-autofill:hover, 
@@ -35,15 +35,16 @@ const StyledTextArea = styled(AntTextArea)`
   //}
 `
 
-class TextArea extends Component {
-  static propTypes = {
-    field: PropTypes.object,
-    form: PropTypes.object,
-    onChange: PropTypes.func,
-    value: PropTypes.any
-  }
+interface IProps {
+  field?: FieldInputProps<string>,
+  form?: FormikProps<never>,
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+  value?: string
+  className?: string
+}
 
-  _onChange = (e) => {
+class TextArea extends Component<IProps> {
+  _onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     const { field, form, onChange } = this.props
 
     if (onChange) onChange(e)
@@ -51,7 +52,7 @@ class TextArea extends Component {
     if (field && form) form.setFieldValue(field.name, e.target.value)
   }
 
-  render() {
+  render(): JSX.Element {
     const { field, form, value, className, ...props } = this.props
 
     return (

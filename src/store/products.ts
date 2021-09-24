@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree'
+import { types, Instance } from 'mobx-state-tree'
 
 import { Model } from '@/utils/mobx-model-helper'
 import { getProducts } from '@/api/products'
@@ -49,5 +49,9 @@ const ProductsStore = Model.named('ProductsStore')
     }
   })
 
+interface IProduct extends Instance<typeof Product> {}
+interface IProductsStore extends Instance<typeof ProductsStore> {}
+
 export { TYPES }
-export default ProductsStore
+export type { IProduct, IProductsStore }
+export default ProductsStore as IProductsStore

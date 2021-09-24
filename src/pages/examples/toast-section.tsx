@@ -15,8 +15,8 @@ const StyledDiv = styled.div`
   }
 `
 
-export default () => {
-  const onClick = (type) => {
+const ToastSection = (): JSX.Element => {
+  const onClick = (type: 'show' | 'warning' | 'error' | 'duration') => {
     if (type === 'show') Toast.show('This is a toast')
     if (type === 'warning') Toast.warning('This is a warning toast')
     if (type === 'error') Toast.error('This is a error toast')
@@ -35,12 +35,14 @@ export default () => {
       </p>
       <div className="section-body">
         <StyledDiv>
-          <Button type="primary" onClick={() => onClick('show')}>Show</Button>
-          <Button type="primary" onClick={() => onClick('warning')}>Warning</Button>
-          <Button type="primary" onClick={() => onClick('error')}>Error</Button>
+          <Button onClick={() => onClick('show')}>Show</Button>
+          <Button onClick={() => onClick('warning')}>Warning</Button>
+          <Button onClick={() => onClick('error')}>Error</Button>
           <Button onClick={() => onClick('duration')}>Custom dutation</Button>
         </StyledDiv>
       </div>
     </section>
   )
 }
+
+export default ToastSection
