@@ -17,7 +17,7 @@ const COLUMNS = [{
   dataIndex: 'avatar',
   key: 'avatar',
   width: 100,
-  render: (cell) => (
+  render: (cell: string) => (
     <Thumbnail
       url={cell}
       rounded
@@ -36,7 +36,7 @@ const COLUMNS = [{
   width: 220
 }]
 
-const FetchableTableSection = observer(() => {
+const FetchableTableSection = observer((): JSX.Element => {
   const store = useStore()
 
   return (

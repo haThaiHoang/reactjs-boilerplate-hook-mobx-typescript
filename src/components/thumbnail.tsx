@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types'
+import React from 'react'
 import styled from 'styled-components'
 import classNames from 'classnames'
 
 import { Images } from '@/theme'
 
-const Image = styled.div`
+const Image = styled.div<{ size: number }>`
   display: block;
   width: ${(props) => props.size}px;
   height: ${(props) => props.size}px;
@@ -21,22 +21,22 @@ const Image = styled.div`
     background-repeat: no-repeat;
   }
 `
+interface IProps {
+  url: string,
+  className?: string,
+  placeholderUrl?: string,
+  size?: number,
+  rounded?: boolean,
+  style?: any
+}
 
-const Thumbnail = ({ url, size, style, placeholderUrl, rounded, className, contain, ...props }) => (
+const Thumbnail = ({ url, size, style, placeholderUrl, rounded, className, ...props }: IProps) => (
   <Image
     style={{ backgroundImage: `url(${url || placeholderUrl || Images.NO_IMAGE})`, ...style }}
     {...props}
     className={classNames(className, { rounded, contain: url })}
     size={size || 40}
-    alt=""
   />
 )
-Thumbnail.propTypes = {
-  url: PropTypes.string,
-  placeholderUrl: PropTypes.string,
-  size: PropTypes.number,
-  rounded: PropTypes.bool,
-  contain: PropTypes.bool
-}
 
 export default Thumbnail
