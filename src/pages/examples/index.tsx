@@ -32,7 +32,7 @@ const Content = styled.div`
   }
 `
 
-export default () => (
+const Examples = (): JSX.Element => (
   <Page>
     <Container>
       <Content>
@@ -46,3 +46,5 @@ export default () => (
     </Container>
   </Page>
 )
+
+export default Examples

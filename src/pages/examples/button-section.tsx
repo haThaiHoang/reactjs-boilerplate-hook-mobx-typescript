@@ -16,17 +16,20 @@ const StyledDiv = styled.div`
   }
 `
 
-export default () => (
+const ButtonSection = (): JSX.Element => (
   <section>
     <p className="section-title">
       Button
     </p>
     <div className="section-body">
       <StyledDiv>
-        <Button>Normal</Button>
-        <Button type="primary">Primary</Button>
-        <Button type="primary" loading>Primary - Loading</Button>
+        <Button onClick={() => null}>Normal</Button>
+        <Button onClick={() => null} size="small">Small</Button>
+        <Button onClick={() => null} rounded>Rounded</Button>
+        <Button onClick={() => null} loading>Loading</Button>
       </StyledDiv>
     </div>
   </section>
 )
+
+export default ButtonSection

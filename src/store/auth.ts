@@ -9,8 +9,7 @@ const TYPES = {
 
 const AuthStore = Model.named('AuthStore')
   .props({
-    loggedIn: types.boolean,
-    lele: types.boolean
+    loggedIn: types.boolean
   })
   .actions((self) => ({
     setLogin() {
@@ -28,8 +27,7 @@ const AuthStore = Model.named('AuthStore')
     }
   }))
   .create({
-    loggedIn: false,
-    lele: false
+    loggedIn: false
   })
 
 interface IAuthStore extends Instance<typeof AuthStore> {}
