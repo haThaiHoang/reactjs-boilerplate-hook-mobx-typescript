@@ -13,7 +13,8 @@ const UiStore = types.model('UiStore')
       self.sideBarStatus = !self.sideBarStatus
     }
   }))
+  .create({
+    sideBarStatus: true
+  })
 
-export default UiStore.create({
-  sideBarStatus: true
-})
+export default UiStore

@@ -41,14 +41,13 @@ const ProductsStore = Model.named('ProductsStore')
       })
     }
   }))
+  .create({
+    products: {
+      items: [],
+      page: 1,
+      total: 0
+    }
+  })
 
-export {
-  TYPES
-}
-export default ProductsStore.create({
-  products: {
-    items: [],
-    page: 1,
-    total: 0
-  }
-})
+export { TYPES }
+export default ProductsStore

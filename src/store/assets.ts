@@ -17,8 +17,7 @@ const AssetsStore = Model.named('AssetsStore')
       })
     }
   }))
+  .create()
 
-export {
-  TYPES
-}
-export default AssetsStore.create()
+export { TYPES }
+export default AssetsStore
