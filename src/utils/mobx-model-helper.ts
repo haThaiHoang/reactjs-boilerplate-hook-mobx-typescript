@@ -1,5 +1,6 @@
 import { types, flow, getSnapshot, applySnapshot, destroy } from 'mobx-state-tree'
 import i18n from '@/translations/i18n'
+import lodash from 'lodash'
 
 import Toast from '@/components/toast'
 import Misc from '@/utils/misc'
@@ -12,7 +13,7 @@ const Model = types.model('MobxModelHelper', {
   type: types.maybeNull(types.string),
   error: types.frozen()
 })
-  .actions((self) => ({
+  .actions((self: any) => ({
     afterCreate() {
       self.INIT_VALUES = getSnapshot(self)
     },
@@ -21,7 +22,7 @@ const Model = types.model('MobxModelHelper', {
       applySnapshot(self, self.INIT_VALUES)
     },
 
-    remove(item) {
+    remove(item: any) {
       destroy(item)
     },
 
@@ -74,7 +75,7 @@ const Model = types.model('MobxModelHelper', {
         if (onError) onError(e)
 
         if (!disabledErrorMessage) {
-          const errorMessages = ERROR_MESSAGES[i18n.language]['error-messages']
+          const errorMessages = lodash.get(ERROR_MESSAGES, `${i18n.language}.error-messages`)
 
           if (handleError) {
             const handledError = handleError(error)

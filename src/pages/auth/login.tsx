@@ -68,7 +68,7 @@ const initialValues = {
   password: ''
 }
 
-const Login = () => {
+const Login = (): JSX.Element => {
   const store = useStore()
   const history = useHistory()
   const [loading, setLoading] = useState(false)

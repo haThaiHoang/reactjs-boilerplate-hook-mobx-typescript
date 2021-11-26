@@ -85,7 +85,7 @@ class Select extends Component {
       <StyledSelect
         {...props}
         {...(field && { id: `formik-field-${field.name}` })}
-        value={field?.value || value}
+        value={field?.value ?? value}
         onChange={this._onChange}
         className={classnames({
           error: lodash.get(form, `errors.${field?.name}`) || error
