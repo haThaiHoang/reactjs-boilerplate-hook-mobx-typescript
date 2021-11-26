@@ -100,7 +100,10 @@ module.exports = (env) => {
         }
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-      new MiniCssExtractPlugin(),
+      new MiniCssExtractPlugin({
+        filename: '[name][fullhash].css',
+        chunkFilename: '[name][fullhash].css'
+      }),
       new webpack.DefinePlugin({
         'window._CONFIG': JSON.stringify(appConfigs),
       }),
