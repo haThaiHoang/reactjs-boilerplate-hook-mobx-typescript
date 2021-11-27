@@ -10,7 +10,13 @@ const Div = styled.div`
   min-width: 0;
 `
 
-export default class extends Component {
+interface IProps {
+  className?: string
+}
+
+class Page extends Component<IProps> {
+  _div: any
+
   scrollTop = () => {
     this._div.scrollTop = 0
   }
@@ -31,3 +37,5 @@ export default class extends Component {
     )
   }
 }
+
+export default Page

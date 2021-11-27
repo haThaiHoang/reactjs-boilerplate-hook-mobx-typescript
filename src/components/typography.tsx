@@ -72,8 +72,9 @@ interface IProps {
   secondary?: boolean
   underline?: boolean
   center?: boolean
-  bold?: boolean,
+  bold?: boolean
   children: React.ReactNode
+  style?: any
 }
 
 const Typography = ({

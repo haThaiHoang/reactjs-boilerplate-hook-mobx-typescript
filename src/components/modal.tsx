@@ -1,11 +1,15 @@
-import { Modal } from 'antd'
+import { Modal, ModalProps } from 'antd'
 import styled from 'styled-components'
 
 const StyledModal = styled(Modal)`
   /* stylelint-disable */
 `
 
-export default ({ children, ...props }) => (
+interface IProps extends ModalProps {
+  children: any
+}
+
+const ModalComponent = ({ children, ...props }: IProps) => (
   <StyledModal
     centered
     // width={600}
@@ -15,3 +19,5 @@ export default ({ children, ...props }) => (
     {children}
   </StyledModal>
 )
+
+export default ModalComponent

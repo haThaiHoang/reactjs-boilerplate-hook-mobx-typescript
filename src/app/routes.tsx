@@ -45,7 +45,7 @@ const Routes = () => {
       <Header />
       <HorizontalBox>
         <SideBar />
-        <Suspense fallback={<Page sidebar><Loading /></Page>}>
+        <Suspense fallback={<Page><Loading /></Page>}>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/examples" component={Examples} />

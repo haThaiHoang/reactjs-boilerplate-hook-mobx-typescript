@@ -1,14 +1,17 @@
 import { Component } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'formik'
+import { connect, FormikProps } from 'formik'
 
-@connect
-class ErrorFocus extends Component {
+interface IProps {
+  formik: FormikProps<never>
+}
+
+class ErrorFocus extends Component<IProps> {
   static propTypes = {
     formik: PropTypes.object
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: IProps) {
     if (prevProps.formik.isSubmitting && !this.props.formik.isSubmitting && !this.props.formik.isValid) {
       const { errors } = prevProps.formik
       const keys = Object.keys(errors)
@@ -30,4 +33,4 @@ class ErrorFocus extends Component {
   }
 }
 
-export default ErrorFocus
+export default connect(ErrorFocus as any)

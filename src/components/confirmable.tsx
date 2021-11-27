@@ -42,11 +42,9 @@ const StyledModal = styled(Modal)`
   }
 `
 
-let instance
+let instance: any
 
 class Confirmable extends Component {
-  static propTypes = {}
-
   state = {
     visible: false,
     content: null,
@@ -54,11 +52,13 @@ class Confirmable extends Component {
     hideCancelButton: false
   }
 
-  static setInstance = (ref) => {
+  _resolve?: (value: unknown) => void
+
+  static setInstance = (ref: any) => {
     instance = ref
   }
 
-  static open = (...params) => {
+  static open = (...params: any) => {
     if (instance) {
       return instance.open(...params)
     }
@@ -66,7 +66,17 @@ class Confirmable extends Component {
     return null
   }
 
-  open = ({ content, acceptButtonText, hideCancelButton }) => new Promise((resolve) => {
+  open = (
+    {
+      content,
+      acceptButtonText,
+      hideCancelButton
+    } : {
+      content: any,
+      acceptButtonText?: string
+      hideCancelButton?: string
+    }
+  ) => new Promise((resolve) => {
     this._resolve = resolve
     this.setState({
       visible: true,
@@ -83,7 +93,7 @@ class Confirmable extends Component {
   }
 
   _onCancel = () => {
-    this._resolve(false)
+    this._resolve?.(false)
 
     this._onClose()
   }
@@ -92,7 +102,7 @@ class Confirmable extends Component {
     this._onClose()
 
     setTimeout(() => {
-      this._resolve(true)
+      this._resolve?.(true)
     }, 300)
   }
 
@@ -122,7 +132,6 @@ class Confirmable extends Component {
                 </Button>
               )}
               <Button
-                type="primary"
                 onClick={this._onAccept}
                 className="action-button"
               >
