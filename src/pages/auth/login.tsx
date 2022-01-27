@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Formik, Form, FormikProps, FormikValues } from 'formik'
 import * as yup from 'yup'
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import Request from '@/utils/request'
 import Storage from '@/utils/storage'
@@ -70,7 +70,7 @@ const initialValues = {
 
 const Login = (): JSX.Element => {
   const store = useStore()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
 
   const onSubmit = async (values: FormikValues): Promise<void> => {
@@ -83,7 +83,7 @@ const Login = (): JSX.Element => {
       Request.setAccessToken(data.token)
 
       setLoading(false)
-      history.push('/')
+      navigate('/')
     } else {
       setLoading(false)
     }

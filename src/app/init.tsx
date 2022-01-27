@@ -53,7 +53,7 @@ const Init = ({ children }: { children: JSX.Element }) => {
     }
 
     fetchData()
-  }, [])
+  }, [hidePreloading])
 
   return inited ? children : null
 }

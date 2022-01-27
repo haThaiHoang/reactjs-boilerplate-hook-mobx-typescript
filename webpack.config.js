@@ -119,7 +119,6 @@ module.exports = (env) => {
       new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-      hot: true,
       open: true,
       client: {
         overlay: true,

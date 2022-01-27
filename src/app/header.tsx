@@ -3,11 +3,12 @@ import { Popover } from 'antd'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import classnames from 'classnames'
+import { useNavigate } from 'react-router-dom'
 
 import Storage from '@/utils/storage'
 import Clickable from '@/components/clickable'
 import { Colors } from '@/theme'
-import { useStore, history } from '@/store'
+import { useStore } from '@/store'
 
 const HeaderContainer = styled.header`
   width: 100%;
@@ -110,12 +111,13 @@ const HeaderContainer = styled.header`
 const Header = () => {
   const store = useStore()
   const { t, i18n } = useTranslation('common')
+  const navigate = useNavigate()
 
   const onLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
 
     Storage.remove('ACCESS_TOKEN')
-    history.replace('/login')
+    navigate('/login')
   }
 
   return (

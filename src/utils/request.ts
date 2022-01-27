@@ -35,6 +35,10 @@ class Request {
     return accessToken
   }
 
+  static hasAccessToken(): boolean {
+    return !!accessToken
+  }
+
   static removeAccessToken(): void {
     accessToken = null
   }

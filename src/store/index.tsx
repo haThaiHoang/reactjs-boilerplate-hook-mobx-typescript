@@ -1,6 +1,5 @@
 import React, { createContext, useContext } from 'react'
-import { createBrowserHistory } from 'history'
-import { Router } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { Instance } from 'mobx-state-tree'
 
 import Configs from '@/configs'
@@ -8,8 +7,6 @@ import ui from './ui'
 import assets from './assets'
 import auth from './auth'
 import products from './products'
-
-export const history = createBrowserHistory({ basename: Configs.BASE_NAME })
 
 const stores = {
   ui,
@@ -35,9 +32,9 @@ export function useStore() {
 
 const MainStore = ({ children }: { children: React.ReactNode }) => (
   <StoreProvider value={stores}>
-    <Router history={history}>
+    <BrowserRouter basename={Configs.BASE_NAME}>
       {children}
-    </Router>
+    </BrowserRouter>
   </StoreProvider>
 )
 

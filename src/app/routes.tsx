@@ -1,8 +1,8 @@
 import { Suspense, lazy } from 'react'
-import { Switch, Route, Redirect, RouteProps } from 'react-router-dom'
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 
-import Storage from '@/utils/storage'
+import Request from '@/utils/request'
 import Loading from '@/components/loading'
 import Page from '@/components/page'
 import Header from './header'
@@ -26,52 +26,37 @@ const HorizontalBox = styled.div`
   min-height: 0;
 `
 
-interface IPrivateRouteProps extends RouteProps {
-  condition: () => boolean
-  redirect: string
+const LoginRequire = ({ redirect, children }: { redirect: string, children: any }) => {
+  if (Request.hasAccessToken()) return children
+  return <Navigate to={redirect} />
 }
 
-const PrivateRoute = ({ condition, redirect, ...props }: IPrivateRouteProps) => {
-  const isValid = condition()
-
-  if (isValid) return <Route {...props} />
-  return <Redirect to={redirect} />
-}
-
-const Routes = () => {
-  // Put private routes that need login here
-  const renderPrivateRoutes = () => (
-    <>
-      <Header />
-      <HorizontalBox>
-        <SideBar />
-        <Suspense fallback={<Page><Loading /></Page>}>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/examples" component={Examples} />
-            <Redirect to="/not-found" />
-          </Switch>
-        </Suspense>
-      </HorizontalBox>
-    </>
-  )
-
-  return (
-    <VerticalBox>
+const DashboardLayout = () => (
+  <>
+    <Header />
+    <HorizontalBox>
+      <SideBar />
       <Suspense fallback={<Page><Loading /></Page>}>
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/not-found" component={NotFound} />
-          <PrivateRoute
-            condition={() => Storage.has('ACCESS_TOKEN')}
-            redirect="/login"
-            path="/"
-            component={renderPrivateRoutes}
-          />
-        </Switch>
+        <Outlet />
       </Suspense>
-    </VerticalBox>
-  )
-}
+    </HorizontalBox>
+  </>
+)
 
-export default Routes
+const RoutesComponent = () => (
+  <VerticalBox>
+    <Suspense fallback={<Page><Loading /></Page>}>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<LoginRequire redirect="/login"><DashboardLayout /></LoginRequire>}>
+          {/* Pages need login to access should put in here */}
+          <Route index element={<Home />} />
+          <Route path="/examples" element={<Examples />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
+  </VerticalBox>
+)
+
+export default RoutesComponent

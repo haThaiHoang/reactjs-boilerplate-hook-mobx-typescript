@@ -1,10 +1,10 @@
 import { Component } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import { DatePicker as AntDatePicker } from 'antd'
 import moment from 'moment'
 import lodash from 'lodash'
+import { FieldInputProps, FormikProps } from 'formik'
 
 const StyledDiv = styled.div`
   // Put your custom styles for Date picker here
@@ -20,22 +20,23 @@ const StyledDiv = styled.div`
   }
 `
 
-class DatePicker extends Component {
-  static propTypes = {
-    field: PropTypes.object,
-    form: PropTypes.object,
-    value: PropTypes.instanceOf(Date),
-    onChange: PropTypes.func,
-    inputOutputFormat: PropTypes.string
-  }
+interface IDatePickerProps {
+  field?: FieldInputProps<string>
+  form?: FormikProps<never>
+  onChange?: (value: moment.Moment | string) => void
+  inputOutputFormat?: string
+  value?: moment.Moment | string
+  className?: string
+}
 
-  _onChange = (date) => {
+class DatePicker extends Component<IDatePickerProps> {
+  _onChange = (date: moment.Moment | null) => {
     const { field, form, onChange, inputOutputFormat } = this.props
 
-    date = inputOutputFormat ? date?.format(inputOutputFormat) : date
+    const parseDate = inputOutputFormat ? date?.format(inputOutputFormat) : date
 
-    if (form && field) form.setFieldValue(field.name, date || null)
-    if (onChange) onChange(date)
+    if (form && field) form.setFieldValue(field.name, parseDate || null)
+    if (onChange) onChange(parseDate as any)
   }
 
   render() {
@@ -43,7 +44,7 @@ class DatePicker extends Component {
     let { value } = this.props
 
     value = field?.value || value
-    value = value && moment(value, inputOutputFormat)
+    const momentValue = value && moment(value, inputOutputFormat)
 
     return (
       <StyledDiv
@@ -53,7 +54,7 @@ class DatePicker extends Component {
         <AntDatePicker
           {...props}
           onChange={this._onChange}
-          value={value}
+          value={momentValue as any}
         />
       </StyledDiv>
     )

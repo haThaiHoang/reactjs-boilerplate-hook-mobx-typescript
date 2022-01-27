@@ -73,7 +73,6 @@ const SideBar = observer((): JSX.Element => {
         <div className="menu">
           {MENU_ITEMS.map((item, index) => (
             <NavLink
-              exact
               key={index}
               to={item.link}
               className="menu-item"
