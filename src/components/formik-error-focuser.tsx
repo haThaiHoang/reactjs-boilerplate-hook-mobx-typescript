@@ -1,5 +1,4 @@
 import { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect, FormikProps } from 'formik'
 
 interface IProps {
@@ -7,10 +6,6 @@ interface IProps {
 }
 
 class ErrorFocus extends Component<IProps> {
-  static propTypes = {
-    formik: PropTypes.object
-  }
-
   componentDidUpdate(prevProps: IProps) {
     if (prevProps.formik.isSubmitting && !this.props.formik.isSubmitting && !this.props.formik.isValid) {
       const { errors } = prevProps.formik

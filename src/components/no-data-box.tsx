@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import Typography from './typography'
@@ -21,8 +20,5 @@ const NoDataBox = ({ message, className }: IProps) => (
     </Typography>
   </StyledDiv>
 )
-NoDataBox.propTypes = {
-  message: PropTypes.string
-}
 
 export default NoDataBox

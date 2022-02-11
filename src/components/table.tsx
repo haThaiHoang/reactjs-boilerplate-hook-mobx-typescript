@@ -1,5 +1,4 @@
 import { Component } from 'react'
-import PropTypes from 'prop-types'
 import { Table as AntdTable, Pagination, PaginationProps, TableProps } from 'antd'
 import styled from 'styled-components'
 
@@ -49,10 +48,6 @@ interface TPagination extends PaginationProps {
 }
 
 class Table extends Component<TTable> {
-  static propTypes = {
-    dataSource: PropTypes.array
-  }
-
   static Pagination = (props: TPagination): JSX.Element => (
     <PaginationBox>
       <p>Total: <b>{props.total}</b></p>
