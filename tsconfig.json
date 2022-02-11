@@ -24,8 +24,8 @@
       "@/*": ["src/*"]
     },
     "noImplicitReturns": true,
-    "emitDecoratorMetadata": true /* Emit design-type metadata for decorated declarations in source files. */,
-    "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied `any` type.. */,
+    "emitDecoratorMetadata": true,
+    "noImplicitAny": true,
   },
   "include": ["src"]
 }

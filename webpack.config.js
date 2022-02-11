@@ -44,16 +44,16 @@ module.exports = (env) => {
       }
     },
     resolve: {
-      extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      extensions: ['.tsx', '.ts', '.js'],
       alias: {
         "@": path.resolve(__dirname, "src")
       }
     },
     module: {
       rules: [{
-        test: /\.(ts|tsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        use: ['babel-loader']
+        test: /\.tsx?$/,
+        use: 'babel-loader',
+        exclude: /node_modules/,
       }, {
         test: /\.less$/,
         use: [
