@@ -1,8 +1,8 @@
-import { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import lodash from 'lodash'
+import { FieldInputProps, FormikProps } from 'formik'
 
 import FileReader from '@/utils/file-reader'
 import { Colors } from '@/theme'
@@ -41,22 +41,25 @@ const StyledDiv = styled.div`
   }
 `
 
-class FileInput extends Component {
-  static propTypes = {
-    field: PropTypes.object,
-    form: PropTypes.object,
-    onChange: PropTypes.func,
-    type: PropTypes.oneOf(['image', 'file']),
-    value: PropTypes.any,
-    accept: PropTypes.string
-  }
+interface IFileInput {
+  field?: FieldInputProps<string>
+  form?: FormikProps<never>
+  onChange?: (value: string) => void
+  type: 'image' | 'file'
+  value: any
+  accept?: string
+  className?: string
+}
 
+class FileInput extends Component<IFileInput, { imageUrl: any | null, file: any | null }> {
   state = {
     imageUrl: null,
     file: null
   }
 
-  _onChange = async (e) => {
+  _input?: any
+
+  _onChange = async (e: any) => {
     const { field, form, onChange, type } = this.props
     const file = e.target.files[0]
 
@@ -93,16 +96,16 @@ class FileInput extends Component {
     }
   }
 
-  _onClick = (e) => {
+  _onClick = (e: any) => {
     e.preventDefault()
     this._input.click()
   }
 
-  clear = (e) => {
+  clear = (e: any) => {
     this._onRemoveClick(e)
   }
 
-  _onRemoveClick = (e) => {
+  _onRemoveClick = (e: any) => {
     e.stopPropagation()
 
     const { field, form, type } = this.props
@@ -118,7 +121,7 @@ class FileInput extends Component {
 
   render() {
     const { field, form, value, className, type, ...props } = this.props
-    const { imageUrl, file } = this.state
+    const { imageUrl, file }: any = this.state
 
     return (
       <StyledDiv
@@ -130,7 +133,6 @@ class FileInput extends Component {
             onClick={this._onClick}
           >
             <Thumbnail
-              name="imageUrl"
               url={imageUrl || field?.value || value}
               size={180}
             />

@@ -1,5 +1,4 @@
 import { Component } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import memoizeOne from 'memoize-one'
 import classnames from 'classnames'
@@ -34,27 +33,27 @@ const StyledDiv = styled.div`
   }
 `
 
-class FetchableTable extends Component {
-  static propTypes = {
-    action: PropTypes.func.isRequired,
-    payload: PropTypes.object,
-    rowKey: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.func
-    ]).isRequired,
-    loading: PropTypes.bool,
-    items: PropTypes.array.isRequired,
-    columns: PropTypes.array.isRequired,
-    total: PropTypes.number.isRequired,
-    page: PropTypes.number.isRequired,
-    limit: PropTypes.number,
-    sort: PropTypes.string,
-    onFetched: PropTypes.func,
-    pagination: PropTypes.bool,
-    autoFetchOnMount: PropTypes.bool,
-    defaultSort: PropTypes.object
+interface IFetchableList {
+  autoFetchOnMount?: boolean
+  pagination?: boolean
+  loading?: boolean
+  onFetched?: (result: any) => void
+  action: (data: any, options: any) => Promise<any>
+  page: number
+  total: number
+  items: any[]
+  columns: any[]
+  payload?: any
+  defaultSort?: {
+    key: string
+    type: 'asc' | 'desc'
   }
+  sort?: string | null
+  limit?: number
+  rowKey?: string
+}
 
+class FetchableTable extends Component<IFetchableList> {
   static defaultProps = {
     autoFetchOnMount: true,
     pagination: true
@@ -77,7 +76,7 @@ class FetchableTable extends Component {
     }
   }
 
-  _fetchData = async (page, sort) => {
+  _fetchData = async (page: number, sort?: string | null) => {
     const { action, onFetched, payload, limit } = this.props
     const { newPayload } = this.state
     const result = await action({
@@ -92,27 +91,24 @@ class FetchableTable extends Component {
     })
 
     if (onFetched) {
-      onFetched(result, {
-        page,
-        sort
-      })
+      onFetched(result)
     }
   }
 
-  fetchDataWithNewPayload = async (newPayload = {}, sort) => {
+  fetchDataWithNewPayload = async (newPayload = {}, sort?: string) => {
     this.state.newPayload = newPayload
 
     await this._fetchData(1, sort)
   }
 
-  _onPaginationChange = (page) => {
+  _onPaginationChange = (page: number) => {
     const { sort } = this.props
     const sortParts = (sort || '').split('|')
 
     this._fetchData(page, sort && `${sortParts[0]}|${sortParts[1]}`)
   }
 
-  _onSortChange = (column, sortDirection) => {
+  _onSortChange = (column: string, sortDirection: 'asc' | 'desc') => {
     this._fetchData(1, `${column}|${sortDirection === 'asc' ? 'desc' : 'asc'}`)
   }
 

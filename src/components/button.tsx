@@ -101,7 +101,7 @@ interface IProps {
   square?: boolean
   background: string
   textColor?: string
-  onClick: () => void
+  onClick: (e: any) => void
   icon?: string
   className?: string,
   children: React.ReactNode

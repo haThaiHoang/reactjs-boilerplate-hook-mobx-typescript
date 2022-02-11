@@ -1,5 +1,4 @@
 import { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { observer } from 'mobx-react'
 
@@ -27,23 +26,24 @@ const StyledDiv = styled.div`
   }
 `
 
-@observer
-class FetchableList extends Component {
-  static propTypes = {
-    renderItem: PropTypes.func,
-    keyExtractor: PropTypes.func.isRequired,
-    action: PropTypes.func.isRequired,
-    payload: PropTypes.object,
-    items: PropTypes.array.isRequired,
-    total: PropTypes.number.isRequired,
-    page: PropTypes.number.isRequired,
-    onFetched: PropTypes.func,
-    loading: PropTypes.bool,
-    noDataMessage: PropTypes.string,
-    pagination: PropTypes.bool,
-    autoFetchOnMount: PropTypes.bool
-  }
+interface IFetchableList {
+  autoFetchOnMount?: boolean
+  pagination?: boolean
+  noDataMessage?: string
+  loading?: boolean
+  onFetched?: (result: any) => void
+  action: (data: any, options: any) => Promise<any>
+  page: number
+  total: number
+  items: any[]
+  payload?: any
+  keyExtractor: (item: any, index: number) => number | string
+  renderItem: (item: any, index: number) => JSX.Element
+  className?: string
+}
 
+@observer
+class FetchableList extends Component<IFetchableList> {
   static defaultProps = {
     pagination: true,
     autoFetchOnMount: true
@@ -62,7 +62,7 @@ class FetchableList extends Component {
     }
   }
 
-  _fetchData = async (page, concat) => {
+  _fetchData = async (page: number, concat?: boolean) => {
     const { action, onFetched, payload } = this.props
     const { newPayload } = this.state
 
@@ -74,7 +74,7 @@ class FetchableList extends Component {
     }, { page, concat })
 
     if (onFetched) {
-      onFetched(result, { page })
+      onFetched(result)
     }
   }
 
@@ -98,7 +98,7 @@ class FetchableList extends Component {
     })
   }
 
-  _renderItem = (item, index) => {
+  _renderItem = (item: any, index: number) => {
     const { renderItem, keyExtractor } = this.props
 
     return (
@@ -108,7 +108,7 @@ class FetchableList extends Component {
     )
   }
 
-  render() {
+  render(): JSX.Element {
     const { items, className, total, loading, noDataMessage, pagination } = this.props
     const { loadingMore } = this.state
 
@@ -126,10 +126,9 @@ class FetchableList extends Component {
           <div className="bottom-box">
             {total > items.length && !loadingMore && (
               <Button
-                color="white"
                 onClick={this._onLoadMore}
               >
-                もっと見る
+                Loadmore
               </Button>
             )}
             {(loadingMore || loading) && (
