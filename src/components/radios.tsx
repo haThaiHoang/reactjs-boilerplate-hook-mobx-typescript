@@ -18,7 +18,7 @@ const StyledRadioGroup = styled(Radio.Group)`
 
 type TOption = {
   name: string
-  value: string
+  value: any
 }
 
 interface TRadios {

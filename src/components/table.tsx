@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Table as AntdTable, Pagination } from 'antd'
+import { Table as AntdTable, Pagination, PaginationProps, TableProps } from 'antd'
 import styled from 'styled-components'
 
 const StyledTable = styled(AntdTable)`
@@ -40,12 +40,20 @@ const PaginationBox = styled.div`
   justify-content: space-between;
 `
 
-class Table extends Component {
+interface TTable extends TableProps<any> {
+  dataSource: any
+}
+
+interface TPagination extends PaginationProps {
+  total: number
+}
+
+class Table extends Component<TTable> {
   static propTypes = {
     dataSource: PropTypes.array
   }
 
-  static Pagination = (props) => (
+  static Pagination = (props: TPagination): JSX.Element => (
     <PaginationBox>
       <p>Total: <b>{props.total}</b></p>
       <Pagination {...props} />
@@ -57,7 +65,7 @@ class Table extends Component {
     if (tableBody) tableBody.scroll(x, y)
   }
 
-  render() {
+  render(): JSX.Element {
     const { dataSource } = this.props
 
     return (

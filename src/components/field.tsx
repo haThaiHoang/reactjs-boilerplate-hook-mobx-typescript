@@ -87,16 +87,7 @@ const ErrorBox = styled.div`
   }
 `
 
-export interface IProps extends IInputProps {
-  component: React.ReactNode,
-  name: string,
-  className?: string,
-  label?: string | React.ReactNode,
-  blockUnnecessaryRerender?: boolean,
-  showError?: boolean
-}
-
-class Field extends React.Component<IProps> {
+class Field extends React.Component<any> {
   static defaultProps = {
     blockUnnecessaryRerender: true,
     showError: true

@@ -42,12 +42,12 @@ const validationSchema = yup.object().shape({
 })
 
 class FormSection extends Component {
-  _onSubmit = (values) => {
+  _onSubmit = (values: any) => {
     // eslint-disable-next-line no-console
     console.log('VALUES', values)
   }
 
-  _renderForm = ({ handleSubmit }) => (
+  _renderForm = ({ handleSubmit }: any) => (
     <Form className="form">
       <FormikErrorFocuser />
       <div className="field-groups">
@@ -89,7 +89,6 @@ class FormSection extends Component {
             <Field.Inner>
               <Field
                 name="gender"
-                showLine
                 options={[{
                   name: 'Male',
                   value: 1
@@ -210,10 +209,9 @@ class FormSection extends Component {
       </div>
       <div className="action-box">
         <Button
-          type="primary"
+          type="submit"
           className="submit-button"
           onClick={handleSubmit}
-          htmlType="submit"
         >
           Submit
         </Button>

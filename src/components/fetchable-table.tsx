@@ -148,7 +148,6 @@ class FetchableTable extends Component<IFetchableList> {
         {pagination && (
           <Table.Pagination
             total={total}
-            pagination={false}
             pageSize={finalLimit}
             current={page + 1}
             showSizeChanger={false}

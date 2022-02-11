@@ -1,10 +1,10 @@
 import { Component } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import lodash from 'lodash'
 import { observer } from 'mobx-react'
 import { Select as AntdSelect } from 'antd'
+import { FieldInputProps, FormikProps } from 'formik'
 
 const StyledSelect = styled(AntdSelect)`
   // Put your custom styles for select here
@@ -21,24 +21,27 @@ const StyledSelect = styled(AntdSelect)`
 
 const { Option } = AntdSelect
 
-@observer
-class Select extends Component {
-  static propTypes = {
-    field: PropTypes.object,
-    form: PropTypes.object,
-    options: PropTypes.array,
-    optionBinding: PropTypes.object,
-    value: PropTypes.any,
-    size: PropTypes.oneOf(['small', 'middle']),
-    onChange: PropTypes.func,
-    error: PropTypes.bool
+interface ISelect {
+  field?: FieldInputProps<string>
+  form?: FormikProps<never>
+  onChange?: (value: string) => void
+  options: any[]
+  optionBinding: {
+    name: string
+    value: any
   }
+  size?: 'small' | 'middle'
+  className?: string
+  value: any
+}
 
+@observer
+class Select extends Component<ISelect> {
   static defaultProps = {
     options: []
   }
 
-  _onChange = (value) => {
+  _onChange = (value: any) => {
     const { field, form, onChange } = this.props
 
     if (onChange) onChange(value || null)
@@ -46,15 +49,15 @@ class Select extends Component {
     if (field && form) form.setFieldValue(field.name, value || null)
   }
 
-  _renderOption = (option) => {
+  _renderOption = (option: any) => {
     if (lodash.isString(option) || lodash.isNumber(option)) {
       return <Option key={option} value={option}>{option}</Option>
     }
 
     const { optionBinding } = this.props
 
-    let value
-    let name
+    let value: any
+    let name: string
     if (lodash.isEmpty(optionBinding)) {
       value = option.value
       name = option.name
@@ -73,7 +76,6 @@ class Select extends Component {
       field,
       form,
       value,
-      error,
       className,
       options,
       onChange,
@@ -87,9 +89,7 @@ class Select extends Component {
         {...(field && { id: `formik-field-${field.name}` })}
         value={field?.value ?? value}
         onChange={this._onChange}
-        className={classnames({
-          error: lodash.get(form, `errors.${field?.name}`) || error
-        }, 'select', className)}
+        className={classnames({ error: lodash.get(form, `errors.${field?.name}`) }, 'select', className)}
       >
         {options.map(this._renderOption)}
       </StyledSelect>
