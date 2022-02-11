@@ -1,8 +1,8 @@
 import { Component } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import classnames from 'classnames'
-import { Radio } from 'antd'
+import { Radio, RadioChangeEvent } from 'antd'
+import { FieldInputProps, FormikProps } from 'formik'
 
 const StyledRadioGroup = styled(Radio.Group)`
   // Put your custom styles for Radios here
@@ -16,28 +16,34 @@ const StyledRadioGroup = styled(Radio.Group)`
   }
 `
 
-class Radios extends Component {
-  static propTypes = {
-    field: PropTypes.object,
-    form: PropTypes.object,
-    options: PropTypes.array,
-    value: PropTypes.any,
-    name: PropTypes.string,
-    onChange: PropTypes.func
-  }
+type TOption = {
+  name: string
+  value: string
+}
 
+interface TRadios {
+  field?: FieldInputProps<string>
+  form?: FormikProps<never>
+  onChange?: (e: RadioChangeEvent) => void
+  name: string
+  value: any
+  options: TOption[]
+  className?: string
+}
+
+class Radios extends Component<TRadios> {
   static defaultProps = {
     options: []
   }
 
-  _onChange = (e) => {
+  _onChange = (e: RadioChangeEvent) => {
     const { field, form, onChange } = this.props
 
     if (form && field) form.setFieldValue(field.name, e.target.value)
     if (onChange) onChange(e)
   }
 
-  _renderOption = (option) => (
+  _renderOption = (option: TOption) => (
     <Radio
       key={option.value}
       value={option.value}
