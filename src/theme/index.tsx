@@ -1,7 +1,6 @@
 import { Component } from 'react'
 import { ThemeProvider } from 'styled-components'
 
-import * as Images from './images'
 import * as Colors from './colors'
 
 class Theme extends Component {
@@ -24,16 +23,13 @@ class Theme extends Component {
 
     return (
       <ThemeProvider theme={theme}>
-        <>
-          {children}
-        </>
+        {children}
       </ThemeProvider>
     )
   }
 }
 
 export {
-  Images,
   Colors
 }
 

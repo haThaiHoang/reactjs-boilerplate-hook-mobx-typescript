@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import classNames from 'classnames'
 
-import { Images } from '@/theme'
+import { NO_IMAGE } from '@/assets/images'
 
 const Image = styled.div<{ size: number }>`
   display: block;
@@ -32,7 +32,7 @@ interface IProps {
 
 const Thumbnail = ({ url, size, style, placeholderUrl, rounded, className, ...props }: IProps) => (
   <Image
-    style={{ backgroundImage: `url(${url || placeholderUrl || Images.NO_IMAGE})`, ...style }}
+    style={{ backgroundImage: `url(${url || placeholderUrl || NO_IMAGE})`, ...style }}
     {...props}
     className={classNames(className, { rounded, contain: url })}
     size={size || 40}

@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 
-import '@/resources/styles'
+import '@/theme/styles'
 import Store from '@/store'
 import Theme from '@/theme'
 import Init from '@/app/init'
