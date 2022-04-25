@@ -12,7 +12,6 @@ interface IRequestOptions {
   url: string
   params?: any
   data?: any
-  headers?: any
 }
 
 class Request {
@@ -21,7 +20,6 @@ class Request {
   }
 
   _options: IOption
-  _authorization: string | null | undefined
 
   static create(options: IOption): any {
     return new Request(options)
@@ -43,68 +41,51 @@ class Request {
     accessToken = null
   }
 
-  get(url: string, params: any, headers: any): Promise<any> {
-    return this._request({ method: 'GET', url, params, headers })
+  get(url: string, params: any): Promise<any> {
+    return this._request({ method: 'GET', url, params })
   }
 
-  post(url: string, data: any, params: any, headers: any): Promise<any> {
-    return this._request({ method: 'POST', url, params, data, headers })
+  post(url: string, data: any, params: any): Promise<any> {
+    return this._request({ method: 'POST', url, params, data })
   }
 
-  put(url: string, data: any, params: any, headers: any): Promise<any> {
-    return this._request({ method: 'PUT', url, params, data, headers })
+  put(url: string, data: any, params: any): Promise<any> {
+    return this._request({ method: 'PUT', url, params, data })
   }
 
-  delete(url: string, data: any, params: any, headers: any): Promise<any> {
-    return this._request({ method: 'DELETE', url, params, data, headers })
+  delete(url: string, data: any, params: any): Promise<any> {
+    return this._request({ method: 'DELETE', url, params, data })
   }
 
   async _request(requestOptions: IRequestOptions): Promise<any> {
-    const { method = 'GET', data = null, headers } = requestOptions
+    const { method = 'GET', data = null } = requestOptions
     let { url } = requestOptions
     const { params = null } = requestOptions
 
     url = this._options.endpoint + url
 
-    if (this._options.handleToken && accessToken) {
-      this._authorization = `Bearer ${accessToken}`
-    } else {
-      this._authorization = null
-    }
-
     if (params) {
       url += this._getQueryString(params)
     }
 
-    const options: {
-      method: string
-      headers: any,
-      body?: any
-    } = {
+    const options: any = {
       method,
       headers: {}
     }
 
-    if (this._authorization) {
-      options.headers.Authorization = this._authorization
+    if (this._options.handleToken && accessToken) {
+      options.headers.Authorization = `Bearer ${accessToken}`
     }
-
-    options.headers = lodash.merge(options.headers, headers)
 
     if (['POST', 'PUT', 'DELETE'].includes(method)) {
       if (data) {
         const serializable = lodash.isPlainObject(data) || lodash.isArray(data)
 
-        options.body = serializable ? JSON.stringify(data) : data
-
-        let contentType = null
-
         if (serializable) {
-          contentType = 'application/json'
-        }
-
-        if (contentType) {
-          options.headers['Content-Type'] = contentType
+          options.body = JSON.stringify(data)
+          options.headers['Content-Type'] = 'application/json'
+        } else {
+          options.body = data
         }
       }
     }
