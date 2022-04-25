@@ -8,7 +8,9 @@ export default class {
     reader.onerror = (error) => reject(error)
   })
 
-  static openDownloadLink = ({ url, data, filename }: { url?: string, data?: ArrayBuffer, filename: string }): void => {
+  static openDownloadDialog = (
+    { url, data, filename }: { url?: string, data?: ArrayBuffer, filename: string }
+  ): void => {
     const downloadUrl: any = url || data
     const a = document.createElement('a')
 
@@ -22,5 +24,19 @@ export default class {
     }
 
     document.body.removeChild(a)
+  }
+
+  static openUploadDialog = (fileType?: string): Promise<Event> => {
+    return new Promise<Event>((resolve) => {
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.accept = fileType || '*.json'
+      input.onchange = (e) => {
+        resolve(e)
+        document.body.removeChild(input)
+      }
+      document.body.appendChild(input)
+      input.click()
+    })
   }
 }
