@@ -29,7 +29,7 @@ module.exports = (env) => {
   console.log('Node ENV: %s', NODE_ENV)
 
   return {
-    devtool: IS_DEV ? 'eval-cheap-module-source-map' : false,
+    devtool: IS_DEV ? 'eval-source-map' : 'source-map',
     target: IS_DEV ? 'web' : 'browserslist',
     entry: path.resolve(__dirname, IS_DEV ? 'src/index.dev.ts' : 'src/index.ts'),
     output: {
