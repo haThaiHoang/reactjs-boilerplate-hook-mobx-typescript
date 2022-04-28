@@ -73,20 +73,32 @@ const Login = (): JSX.Element => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
 
-  const onSubmit = async (values: FormikValues): Promise<void> => {
-    setLoading(true)
+  const onSubmit = (values: FormikValues) => {
+    const a = null
+    const f = 7
+    const u = 9
 
-    const { success, data } = await store.auth.login(values)
+    new Promise((resolve) => {
+      resolve(true)
+    })
 
-    if (success) {
-      Storage.set('ACCESS_TOKEN', data.token)
-      Request.setAccessToken(data.token)
+    throw 4
 
-      setLoading(false)
-      navigate('/')
-    } else {
-      setLoading(false)
-    }
+
+
+    // setLoading(true)
+    //
+    // const { success, data } = await store.auth.login(values)
+    //
+    // if (success) {
+    //   Storage.set('ACCESS_TOKEN', data.token)
+    //   Request.setAccessToken(data.token)
+    //
+    //   setLoading(false)
+    //   navigate('/')
+    // } else {
+    //   setLoading(false)
+    // }
   }
 
   const renderForm = ({ handleSubmit }: FormikProps<FormikValues>): JSX.Element => {
@@ -111,7 +123,7 @@ const Login = (): JSX.Element => {
             size="large"
             type="submit"
             loading={loading}
-            onClick={handleSubmit}
+            onClick={onSubmit}
           >
             Login
           </Button>
