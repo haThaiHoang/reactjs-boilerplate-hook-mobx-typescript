@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { Instance } from 'mobx-state-tree'
+import lodash from 'lodash'
 
 import Configs from '@/configs'
 import ui from './ui'
@@ -17,13 +18,13 @@ const stores = {
 
 type TRootStore = Instance<typeof stores>
 
-const RootStoreContext = createContext<null | TRootStore>(null)
+const RootStoreContext = createContext<TRootStore>({} as TRootStore)
 const StoreProvider = RootStoreContext.Provider
 
 export function useStore() {
   const store = useContext(RootStoreContext)
 
-  if (store === null) {
+  if (lodash.isEmpty(store)) {
     throw new Error('Store cannot be null, please add a context provider')
   }
 

@@ -1,8 +1,6 @@
-import { Component } from 'react'
 import styled from 'styled-components'
 import classnames from 'classnames'
 import lodash from 'lodash'
-import { observer } from 'mobx-react'
 import { Select as AntdSelect } from 'antd'
 import { FieldInputProps, FormikProps } from 'formik'
 
@@ -35,26 +33,28 @@ interface ISelect {
   value: any
 }
 
-@observer
-class Select extends Component<ISelect> {
-  static defaultProps = {
-    options: []
-  }
+const Select = (props: ISelect) => {
+  const {
+    field,
+    form,
+    value,
+    className,
+    options,
+    onChange,
+    optionBinding,
+    ...restProps
+  } = props
 
-  _onChange = (value: any) => {
-    const { field, form, onChange } = this.props
-
+  const onValueChange = (value: any) => {
     if (onChange) onChange(value || null)
 
     if (field && form) form.setFieldValue(field.name, value || null)
   }
 
-  _renderOption = (option: any) => {
+  const renderOption = (option: any) => {
     if (lodash.isString(option) || lodash.isNumber(option)) {
       return <Option key={option} value={option}>{option}</Option>
     }
-
-    const { optionBinding } = this.props
 
     let value: any
     let name: string
@@ -71,30 +71,20 @@ class Select extends Component<ISelect> {
     )
   }
 
-  render() {
-    const {
-      field,
-      form,
-      value,
-      className,
-      options,
-      onChange,
-      optionBinding,
-      ...props
-    } = this.props
-
-    return (
-      <StyledSelect
-        {...props}
-        {...(field && { id: `formik-field-${field.name}` })}
-        value={field?.value ?? value}
-        onChange={this._onChange}
-        className={classnames({ error: lodash.get(form, `errors.${field?.name}`) }, 'select', className)}
-      >
-        {options.map(this._renderOption)}
-      </StyledSelect>
-    )
-  }
+  return (
+    <StyledSelect
+      {...restProps}
+      {...(field && { id: `formik-field-${field.name}` })}
+      value={field?.value ?? value}
+      onChange={onValueChange}
+      className={classnames({ error: lodash.get(form, `errors.${field?.name}`) }, 'select', className)}
+    >
+      {options.map(renderOption)}
+    </StyledSelect>
+  )
+}
+Select.defaultProps = {
+  options: []
 }
 
 export default Select

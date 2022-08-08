@@ -1,6 +1,5 @@
 import { Component, Fragment } from 'react'
 import styled from 'styled-components'
-import { observer } from 'mobx-react'
 
 import Configs from '@/configs'
 import Button from '@/components/button'
@@ -42,7 +41,6 @@ interface IFetchableList {
   className?: string
 }
 
-@observer
 class FetchableList extends Component<IFetchableList> {
   static defaultProps = {
     pagination: true,

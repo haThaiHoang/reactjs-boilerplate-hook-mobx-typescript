@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import classnames from 'classnames'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 
 import { Colors } from '@/theme'
 import { useStore } from '@/store'

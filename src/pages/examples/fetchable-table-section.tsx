@@ -1,5 +1,5 @@
 import React from 'react'
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react-lite'
 
 import Thumbnail from '@/components/thumbnail'
 import FetchableTable from '@/components/fetchable-table'
@@ -50,7 +50,7 @@ const FetchableTableSection = observer((): JSX.Element => {
           action={productsStore.getProducts}
           total={productsStore.products.total}
           page={productsStore.products.page}
-          items={productsStore.products.items}
+          items={productsStore.products.items.toJSON()}
           sort={productsStore.products.sort}
         />
       </div>
