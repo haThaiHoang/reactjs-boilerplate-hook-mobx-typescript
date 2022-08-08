@@ -3,7 +3,6 @@ import { observer } from 'mobx-react'
 
 import Thumbnail from '@/components/thumbnail'
 import FetchableTable from '@/components/fetchable-table'
-import { TYPES } from '@/store/products'
 import { useStore } from '@/store'
 
 const COLUMNS = [{
@@ -37,7 +36,7 @@ const COLUMNS = [{
 }]
 
 const FetchableTableSection = observer((): JSX.Element => {
-  const store = useStore()
+  const { products: productsStore } = useStore()
 
   return (
     <section>
@@ -48,12 +47,11 @@ const FetchableTableSection = observer((): JSX.Element => {
         <FetchableTable
           rowKey="id"
           columns={COLUMNS}
-          action={store.products.getProducts}
-          total={store.products.products.total}
-          page={store.products.products.page}
-          items={store.products.products.items}
-          loading={store.products.type === TYPES.GET_PRODUCTS}
-          sort={store.products.products.sort}
+          action={productsStore.getProducts}
+          total={productsStore.products.total}
+          page={productsStore.products.page}
+          items={productsStore.products.items}
+          sort={productsStore.products.sort}
         />
       </div>
     </section>

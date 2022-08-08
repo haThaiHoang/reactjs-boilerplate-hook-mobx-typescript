@@ -15,9 +15,9 @@ const stores = {
   products
 }
 
-interface IRootStore extends Instance<typeof stores> {}
+type TRootStore = Instance<typeof stores>
 
-const RootStoreContext = createContext<null | IRootStore>(null)
+const RootStoreContext = createContext<null | TRootStore>(null)
 const StoreProvider = RootStoreContext.Provider
 
 export function useStore() {

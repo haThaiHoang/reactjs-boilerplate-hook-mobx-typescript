@@ -69,14 +69,14 @@ const initialValues = {
 }
 
 const Login = (): JSX.Element => {
-  const store = useStore()
+  const { auth: authStore } = useStore()
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
 
   const onSubmit = async (values: FormikValues): Promise<void> => {
     setLoading(true)
 
-    const { success, data } = await store.auth.login(values)
+    const { success, data } = await authStore.login(values)
 
     if (success) {
       Storage.set('ACCESS_TOKEN', data.token)

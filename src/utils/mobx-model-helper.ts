@@ -9,7 +9,6 @@ import ERROR_MESSAGES from '@/translations/error-messages.json'
 import Storage from './storage'
 
 const Model = types.model('MobxModelHelper', {
-  type: types.maybeNull(types.string),
   error: types.frozen()
 })
   .actions((self: any) => ({
@@ -26,7 +25,6 @@ const Model = types.model('MobxModelHelper', {
     },
 
     request: flow(function* ({
-      type,
       api,
       payload,
       onSuccess,
@@ -35,9 +33,6 @@ const Model = types.model('MobxModelHelper', {
       disabledErrorMessage,
       successMessage
     }) {
-      if (type) {
-        self.type = type
-      }
       self.error = null
 
       let data = null
@@ -90,8 +85,6 @@ const Model = types.model('MobxModelHelper', {
           }
         }
       }
-
-      self.type = null
 
       return { success, data, payload }
     })

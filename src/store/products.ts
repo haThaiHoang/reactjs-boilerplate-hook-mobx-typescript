@@ -1,11 +1,7 @@
-import { types, Instance } from 'mobx-state-tree'
+import { types } from 'mobx-state-tree'
 
 import { Model } from '@/utils/mobx-model-helper'
 import { getProducts } from '@/api/products'
-
-const TYPES = {
-  'GET_PRODUCTS': 'GET_PRODUCTS'
-}
 
 const Product = types.model('Product')
   .props({
@@ -27,7 +23,6 @@ const ProductsStore = Model.named('ProductsStore')
   .actions((self) => ({
     getProducts(payload: any, { page, sort }: { page: number, sort: string | null }) {
       return self.request({
-        type: TYPES.GET_PRODUCTS,
         api: getProducts,
         payload,
         onSuccess: (result: any) => {
@@ -49,9 +44,4 @@ const ProductsStore = Model.named('ProductsStore')
     }
   })
 
-interface IProduct extends Instance<typeof Product> {}
-interface IProductsStore extends Instance<typeof ProductsStore> {}
-
-export { TYPES }
-export type { IProduct, IProductsStore }
-export default ProductsStore as IProductsStore
+export default ProductsStore

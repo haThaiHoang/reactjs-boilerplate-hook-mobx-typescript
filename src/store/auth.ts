@@ -1,11 +1,7 @@
-import { types, Instance } from 'mobx-state-tree'
+import { types } from 'mobx-state-tree'
 
 import { Model } from '@/utils/mobx-model-helper'
 import { login } from '@/api/auth'
-
-const TYPES = {
-  LOGIN: 'LOGIN'
-}
 
 const AuthStore = Model.named('AuthStore')
   .props({
@@ -17,7 +13,6 @@ const AuthStore = Model.named('AuthStore')
     },
     login(payload: any) {
       return self.request({
-        type: TYPES.LOGIN,
         api: login,
         payload,
         onSuccess: () => {
@@ -30,8 +25,4 @@ const AuthStore = Model.named('AuthStore')
     loggedIn: false
   })
 
-interface IAuthStore extends Instance<typeof AuthStore> {}
-
-export { TYPES }
-export type { IAuthStore }
-export default AuthStore as IAuthStore
+export default AuthStore
