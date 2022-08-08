@@ -6,7 +6,7 @@ import classnames from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { Colors } from '@/theme'
-import { useStore } from '@/store'
+import { useStore } from '@/hooks/store'
 
 const Box = styled.div`
   width: 0;
@@ -65,10 +65,10 @@ const MENU_ITEMS = [{
 
 const SideBar = observer((): JSX.Element => {
   const { t } = useTranslation('common')
-  const store = useStore()
+  const { ui: uiStore } = useStore()
 
   return (
-    <Box className={classnames({ open: store.ui.sideBarStatus })}>
+    <Box className={classnames({ open: uiStore.sideBarStatus })}>
       <div className="surfing-box">
         <div className="menu">
           {MENU_ITEMS.map((item, index) => (

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import Thumbnail from '@/components/thumbnail'
 import FetchableTable from '@/components/fetchable-table'
-import { useStore } from '@/store'
+import { useStore } from '@/hooks/store'
 
 const COLUMNS = [{
   title: '#',

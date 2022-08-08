@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import Storage from '@/utils/storage'
 import Clickable from '@/components/clickable'
 import { Colors } from '@/theme'
-import { useStore } from '@/store'
+import { useInject } from '@/hooks/store'
 
 const HeaderContainer = styled.header`
   width: 100%;
@@ -109,7 +109,8 @@ const HeaderContainer = styled.header`
 `
 
 const Header = () => {
-  const store = useStore()
+  const store = useInject((store) => store.ui)
+
   const { t, i18n } = useTranslation('common')
   const navigate = useNavigate()
 
@@ -126,7 +127,7 @@ const Header = () => {
         <div className="left-box">
           <Clickable
             className="menu-button"
-            onClick={store.ui.toggleSideBar}
+            onClick={store.toggleSideBar}
           >
             <div />
             <div />

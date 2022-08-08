@@ -1,8 +1,7 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext } from 'react'
 import { connectReduxDevtools } from 'mst-middlewares'
 import { BrowserRouter } from 'react-router-dom'
 import { Instance } from 'mobx-state-tree'
-import lodash from 'lodash'
 
 import Configs from '@/configs'
 import ui from './ui'
@@ -17,20 +16,10 @@ const stores = {
   products
 }
 
-type TRootStore = Instance<typeof stores>
+export type TRootStore = Instance<typeof stores>
 
-const RootStoreContext = createContext<TRootStore>({} as TRootStore)
+export const RootStoreContext = createContext<TRootStore>({} as TRootStore)
 const StoreProvider = RootStoreContext.Provider
-
-export function useStore() {
-  const store = useContext(RootStoreContext)
-
-  if (lodash.isEmpty(store)) {
-    throw new Error('Store cannot be null, please add a context provider')
-  }
-
-  return store
-}
 
 if (Configs.ENV === 'local') {
   connectReduxDevtools(require("remotedev"), auth)

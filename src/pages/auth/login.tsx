@@ -12,7 +12,7 @@ import Button from '@/components/button'
 import Page from '@/components/page'
 import Field from '@/components/field'
 import VALIDATION_MESSAGES from '@/constants/validation-messages'
-import { useStore } from '@/store'
+import { useStore } from '@/hooks/store'
 
 const StyledContainer = styled(Container)`
   display: flex;
