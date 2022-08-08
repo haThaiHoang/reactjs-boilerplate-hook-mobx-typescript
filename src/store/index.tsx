@@ -1,4 +1,5 @@
 import React, { createContext, useContext } from 'react'
+import { connectReduxDevtools } from 'mst-middlewares'
 import { BrowserRouter } from 'react-router-dom'
 import { Instance } from 'mobx-state-tree'
 import lodash from 'lodash'
@@ -29,6 +30,10 @@ export function useStore() {
   }
 
   return store
+}
+
+if (Configs.ENV === 'local') {
+  connectReduxDevtools(require("remotedev"), auth)
 }
 
 const MainStore = ({ children }: { children: React.ReactNode }) => (
