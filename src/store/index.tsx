@@ -1,5 +1,5 @@
 import React, { createContext } from 'react'
-import { connectReduxDevtools } from 'mst-middlewares'
+// import { connectReduxDevtools } from 'mst-middlewares'
 import { BrowserRouter } from 'react-router-dom'
 import { Instance } from 'mobx-state-tree'
 
@@ -21,9 +21,9 @@ export type TRootStore = Instance<typeof stores>
 export const RootStoreContext = createContext<TRootStore>({} as TRootStore)
 const StoreProvider = RootStoreContext.Provider
 
-if (Configs.ENV === 'local') {
-  connectReduxDevtools(require("remotedev"), auth)
-}
+// if (Configs.ENV === 'local') {
+//   connectReduxDevtools(require("remotedev"), ui)
+// }
 
 const MainStore = ({ children }: { children: React.ReactNode }) => (
   <StoreProvider value={stores}>
